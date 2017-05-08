@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Success</title>
+  </head>
+  <body>
+    <h1>Success! Welcome, {{ name }}</h1>
+    <p>Successfully
+      {% if request.session.action == 'register' %}
+          registered!</p>
+      {% else %}
+          logged in!</p>
+      {% endif %}
+    <a href="{% url 'books:index' %}">to Books</a>
+  </body>
+</html>

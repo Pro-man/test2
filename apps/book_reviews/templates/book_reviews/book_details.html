@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add Book and Review</title>
+  </head>
+  <body>
+    <div class="header">
+      <a href="{% url 'books:index' %}">Home</a>
+      <a href="{% url 'books:logout' %}">Logout</a>
+    </div>
+  <div class="left_side">
+    <h1>{{ book.title }}</h1>
+    <h3>Author: {{ book.author }}</h3>
+      <h2>Reviews:</h2>
+      {% for review in reviews|slice:":3" %}
+        <p>
+          Rating:
+          {% with ''|center:review.rating as range %}
+            {% for _ in range %}<img src="" alt="*">{% endfor %}
+          {% endwith %}
+        </p>
+        <p>
+          <a href="/books/users/{{ review.reviewer.id }}">{{ review.reviewer.first_name }}</a>
+          says: {{ review.review_text }}
+        </p>
+        <p>posted on {{ review.created_at }}</p>
+        {% if review.reviewer.id == request.session.id %}
+          <form action="{% url 'books:delete_review' review_id=review.id book_id=book.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" name="" value="Delete review">
+          </form>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <form class="" action="{% url 'books:add_review' book_id=book.id %}" method="post">
+      {% csrf_token %}
+      <label for="review">Add a review:</label>
+      <textarea name="review" rows="8" cols="80"></textarea>
+      <select class="" name="rating">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <label for="rating">stars</label>
+      <input type="submit" name="" value="Submit review">
+    </form>
+  </body>
+</html>

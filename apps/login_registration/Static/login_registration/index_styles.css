@@ -1,0 +1,33 @@
+.main_content {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: silver;
+  padding: 2px 15px;
+}
+
+.bottom_space {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-left: 25px;
+  overflow: auto;
+}
+
+.submit_button {
+  margin-left: 15px;
+}
+
+.right-align {
+  float: right;
+  margin-right: 45px;
+}
+
+.error{
+  color: red;
+}
+
+.correct {
+  color: green;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    {% load staticfiles %}
+    <title>Book Reviews</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Welcome, {{ name }}!</h1>
+      <a href="{% url 'books:add_form' %}">Add Book and Review</a>
+      <a href="{% url 'books:logout' %}">Logout</a>
+    </div>
+    <div class="left_side">
+      <h2>Recent Book Reviews:</h2>
+      {% if reviews %}
+        {% for review in reviews|slice:":3" %}
+          <a href="{% url 'books:book_details' book_id=review.book.id %}">{{ review.book.title }}</a>
+          <p>Rating: {% with ''|center:review.rating as range %}{% for _ in range %}<img src="{% static 'book_reviews/images/imdb_star_22x21-2889147855._CB522736550_.png' %}" alt="*">{% endfor %}{% endwith %}</p>
+          <p><a href="{% url 'books:user_details' user_id=review.reviewer.id %}">{{ review.reviewer.first_name }}</a> says: {{ review.review_text }}</p>
+          <p>posted on {{ review.created_at }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+    <div class="books_with_reviews">
+      <h2>Other books with reviews:</h2>
+      {% for book in books %}
+        <p><a href="{% url 'books:book_details' book_id=book.id %}">{{ book }}</a></p>
+      {% endfor %}
+    </div>
+  </body>
+</html>
